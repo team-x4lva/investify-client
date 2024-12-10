@@ -10,9 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AutoTabsRouter(
-      routes: const [
-        SetupRoute(),
-      ],
+      routes: const [SetupRoute(), JournalRoute()],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
@@ -35,7 +33,12 @@ class HomeScreen extends StatelessWidget {
                     color: theme.colorScheme.onSurface,
                   ),
                   label: ''),
-              const NavigationDestination(icon: Icon(Icons.backpack), label: '')
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.backpack,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  label: '')
             ],
           ),
         );
