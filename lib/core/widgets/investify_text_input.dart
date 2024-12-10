@@ -7,17 +7,20 @@ class InvestifyTextInput extends StatelessWidget {
     required this.controller,
     this.validator,
     this.keyboardType,
+    this.obscureText,
   });
 
   final String hintText;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final TextEditingController controller;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextFormField(
+      obscureText: obscureText ?? false,
       validator: validator,
       keyboardType: keyboardType,
       controller: controller,
