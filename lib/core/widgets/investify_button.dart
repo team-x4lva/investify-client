@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InvestifyButton extends StatelessWidget {
+class InvestifyButton extends StatefulWidget {
   const InvestifyButton({
     super.key,
     required this.child,
@@ -19,17 +19,47 @@ class InvestifyButton extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<InvestifyButton> createState() => _InvestifyButtonState();
+}
+
+class _InvestifyButtonState extends State<InvestifyButton> {
+  bool isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-          width: width,
+      onTapDown: (_) {
+        setState(() {
+          isPressed = true;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          isPressed = false;
+        });
+        widget.onTap();
+      },
+      onTapCancel: () {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onPanUpdate: (_) {
+        if (isPressed) {
+          setState(() {
+            isPressed = false;
+          });
+        }
+      },
+      child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          width: widget.width,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [theme.primaryColor, theme.colorScheme.secondary]),
-              boxShadow: showShadow
+              boxShadow: widget.showShadow || isPressed
                   ? [
                       BoxShadow(
                           offset: const Offset(3, 5),
@@ -39,10 +69,10 @@ class InvestifyButton extends StatelessWidget {
                   : null,
               borderRadius: BorderRadius.circular(20)),
           alignment: Alignment.center,
-          padding: padding ??
+          padding: widget.padding ??
               const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          margin: margin,
-          child: child),
+          margin: widget.margin,
+          child: widget.child),
     );
   }
 }

@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           body: child,
           bottomNavigationBar: NavigationBar(
+            animationDuration: const Duration(milliseconds: 200),
             selectedIndex: tabsRouter.activeIndex,
             onDestinationSelected: (index) {
               tabsRouter.setActiveIndex(index);
@@ -24,6 +25,7 @@ class HomeScreen extends StatelessWidget {
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             backgroundColor: theme.colorScheme.surface,
             indicatorColor: Colors.transparent,
+            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
             indicatorShape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             destinations: [

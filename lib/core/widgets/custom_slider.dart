@@ -5,7 +5,10 @@ import 'package:investify/core/widgets/widgets.dart';
 class CustomSlider extends StatefulWidget {
   final ValueChanged<String> onValueChanged;
 
-  const CustomSlider({required this.onValueChanged, super.key});
+  const CustomSlider(
+      {required this.onValueChanged, super.key, required this.aboutStrategy});
+
+  final Map<String, String> aboutStrategy;
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
@@ -13,11 +16,12 @@ class CustomSlider extends StatefulWidget {
 
 class _CustomSliderState extends State<CustomSlider> {
   final List<String> options = [
-    "Консервативный",
+    "Консервативно",
     "Сбалансировано",
     "Агрессивно"
   ];
   double currentValue = 50;
+  String currentOption = 'Сбалансировано';
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +55,13 @@ class _CustomSliderState extends State<CustomSlider> {
               currentValue = lowerValue;
               if (currentValue < 33.33) {
                 widget.onValueChanged(options[0]);
+                currentOption = options[0];
               } else if (currentValue < 66.66) {
                 widget.onValueChanged(options[1]);
+                currentOption = options[1];
               } else {
                 widget.onValueChanged(options[2]);
+                currentOption = options[2];
               }
             });
           },
@@ -62,15 +69,29 @@ class _CustomSliderState extends State<CustomSlider> {
         const SizedBox(height: 8),
         InvestifyAnimatedWidget(
           index: 2,
-          child: AnimatedText(
-            currentValue < 33.33
-                ? options[0]
-                : currentValue < 66.66
-                    ? options[1]
-                    : options[2],
+          child: Text(
+            currentOption,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
+        InvestifyAnimatedWidget(
+          key: UniqueKey(),
+          duration: const Duration(milliseconds: 200),
+          index: 2,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surfaceContainer,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              widget.aboutStrategy[currentOption] ?? 'Ошибка',
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w500),
+            ),
+          ),
+        )
       ],
     );
   }
