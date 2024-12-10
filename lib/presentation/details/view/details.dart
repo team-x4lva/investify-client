@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:investify/core/widgets/animated_typing_text.dart';
+import 'package:investify/core/widgets/investify_animated_widget.dart';
 import 'package:investify/core/widgets/picker_widget.dart';
+import 'package:investify/core/widgets/widgets.dart';
 
 @RoutePage()
 class DetailsPage extends StatefulWidget {
@@ -27,7 +30,7 @@ class _DetailsPageState extends State<DetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
+              AnimatedText(
                 'Выбор инструментов и стратегии',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineSmall
@@ -36,13 +39,17 @@ class _DetailsPageState extends State<DetailsPage> {
               const SizedBox(
                 height: 20,
               ),
-              PickerWidget(elements: const [
-                'Акции',
-                'Облигации',
-                'Валюта',
-                'Золото',
-              ], color: theme.primaryColor, pickedItems: callbackList),
-              CustomSlider(onValueChanged: (_) {})
+              InvestifyAnimatedWidget(
+                index: 1,
+                child: PickerWidget(elements: const [
+                  'Акции',
+                  'Облигации',
+                  'Валюта',
+                  'Золото',
+                ], color: theme.primaryColor, pickedItems: callbackList),
+              ),
+              InvestifyAnimatedWidget(
+                  index: 2, child: CustomSlider(onValueChanged: (_) {}))
             ],
           ),
         ),
@@ -109,13 +116,16 @@ class _CustomSliderState extends State<CustomSlider> {
           },
         ),
         const SizedBox(height: 8),
-        Text(
-          currentValue < 33.33
-              ? options[0]
-              : currentValue < 66.66
-                  ? options[1]
-                  : options[2],
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        InvestifyAnimatedWidget(
+          index: 3,
+          child: Text(
+            currentValue < 33.33
+                ? options[0]
+                : currentValue < 66.66
+                    ? options[1]
+                    : options[2],
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );
