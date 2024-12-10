@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:investify/core/widgets/animated_typing_text.dart';
-import 'package:investify/core/widgets/investify_animated_widget.dart';
-import 'package:investify/core/widgets/picker_widget.dart';
 import 'package:investify/core/widgets/widgets.dart';
 
 @RoutePage()
@@ -117,8 +114,8 @@ class _CustomSliderState extends State<CustomSlider> {
         ),
         const SizedBox(height: 8),
         InvestifyAnimatedWidget(
-          index: 3,
-          child: Text(
+          index: 2,
+          child: AnimatedText(
             currentValue < 33.33
                 ? options[0]
                 : currentValue < 66.66
@@ -127,6 +124,16 @@ class _CustomSliderState extends State<CustomSlider> {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+        InvestifyAnimatedWidget(
+            index: 2,
+            child: InvestifyButton(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  'Собрать портфель',
+                  style: theme.textTheme.titleLarge,
+                ),
+                onTap: () {}))
       ],
     );
   }

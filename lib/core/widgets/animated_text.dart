@@ -11,7 +11,7 @@ class AnimatedText extends StatefulWidget {
     super.key,
     this.style,
     this.textAlign,
-    this.duration = const Duration(seconds: 1),
+    this.duration = const Duration(milliseconds: 500),
   });
 
   @override

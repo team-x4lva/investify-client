@@ -25,7 +25,7 @@ class InvestifyTextInput extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         hintStyle: TextStyle(
             color: theme.hintColor.withOpacity(0.3),
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.bold),
         enabledBorder: OutlineInputBorder(
             borderSide:

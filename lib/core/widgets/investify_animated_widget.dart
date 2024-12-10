@@ -11,7 +11,7 @@ class InvestifyAnimatedWidget extends StatefulWidget {
     required this.child,
     required this.index,
     this.duration,
-    this.offset = 100,
+    this.offset = 50,
   });
 
   @override
@@ -37,7 +37,7 @@ class _InvestifyAnimatedWidgetState extends State<InvestifyAnimatedWidget>
       end: 0.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeOut,
+      curve: Curves.easeInOut,
     ));
 
     Future.delayed(Duration(milliseconds: 100 * widget.index), () {

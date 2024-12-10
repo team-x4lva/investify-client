@@ -31,8 +31,8 @@ class _SetupPageState extends State<SetupPage> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Начините инвестировать прямо сейчас',
+              child: AnimatedText(
+                'Собери портфель',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class _SetupPageState extends State<SetupPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: InvestifyTextInput(
                       controller: moneyController,
-                      hintText: 'Введите сумму инвестиций     ₽'),
+                      hintText: 'Введите сумму инвестиций (₽)'),
                 ),
               ],
             ),
