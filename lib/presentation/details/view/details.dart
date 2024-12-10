@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:investify/core/widgets/custom_slider.dart';
 import 'package:investify/core/widgets/widgets.dart';
 
 @RoutePage()
@@ -46,95 +46,22 @@ class _DetailsPageState extends State<DetailsPage> {
                 ], color: theme.primaryColor, pickedItems: callbackList),
               ),
               InvestifyAnimatedWidget(
-                  index: 2, child: CustomSlider(onValueChanged: (_) {}))
+                  index: 2, child: CustomSlider(onValueChanged: (_) {})),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+              InvestifyAnimatedWidget(
+                  index: 3,
+                  child: InvestifyButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Text(
+                        'Собрать портфель',
+                        style: theme.textTheme.titleLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () {})),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomSlider extends StatefulWidget {
-  final ValueChanged<String> onValueChanged;
-
-  const CustomSlider({required this.onValueChanged, super.key});
-
-  @override
-  State<CustomSlider> createState() => _CustomSliderState();
-}
-
-class _CustomSliderState extends State<CustomSlider> {
-  final List<String> options = [
-    "Консервативный",
-    "Сбалансировано",
-    "Агрессивно"
-  ];
-  double currentValue = 50;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        FlutterSlider(
-          values: [currentValue],
-          min: 0,
-          max: 100,
-          tooltip: FlutterSliderTooltip(disabled: true),
-          trackBar: FlutterSliderTrackBar(
-            inactiveTrackBarHeight: 30,
-            activeTrackBarHeight: 30,
-            inactiveTrackBar: BoxDecoration(
-              color: theme.hintColor.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            activeTrackBar: BoxDecoration(
-              color: theme.primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          handler: FlutterSliderHandler(
-            decoration: const BoxDecoration(), // Убираем декорацию
-            child: const SizedBox.shrink(), // Заменяем на пустой виджет
-          ),
-          onDragging: (handlerIndex, lowerValue, upperValue) {
-            setState(() {
-              currentValue = lowerValue;
-              if (currentValue < 33.33) {
-                widget.onValueChanged(options[0]);
-              } else if (currentValue < 66.66) {
-                widget.onValueChanged(options[1]);
-              } else {
-                widget.onValueChanged(options[2]);
-              }
-            });
-          },
-        ),
-        const SizedBox(height: 8),
-        InvestifyAnimatedWidget(
-          index: 2,
-          child: AnimatedText(
-            currentValue < 33.33
-                ? options[0]
-                : currentValue < 66.66
-                    ? options[1]
-                    : options[2],
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.35),
-        InvestifyAnimatedWidget(
-            index: 2,
-            child: InvestifyButton(
-                width: MediaQuery.of(context).size.width * 0.7,
-                child: Text(
-                  'Собрать портфель',
-                  style: theme.textTheme.titleLarge,
-                ),
-                onTap: () {}))
-      ],
     );
   }
 }
