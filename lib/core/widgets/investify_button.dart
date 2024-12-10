@@ -6,7 +6,7 @@ class InvestifyButton extends StatelessWidget {
     required this.child,
     this.padding,
     this.margin,
-    this.showShadow = true,
+    this.showShadow = false,
     this.width,
     required this.onTap,
   });
@@ -32,8 +32,8 @@ class InvestifyButton extends StatelessWidget {
               boxShadow: showShadow
                   ? [
                       BoxShadow(
-                          offset: const Offset(5, 3),
-                          blurRadius: 20,
+                          offset: const Offset(3, 5),
+                          blurRadius: 10,
                           color: theme.colorScheme.secondary),
                     ]
                   : null,

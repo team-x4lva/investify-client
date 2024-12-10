@@ -31,15 +31,15 @@ class _CustomSliderState extends State<CustomSlider> {
           max: 100,
           tooltip: FlutterSliderTooltip(disabled: true),
           trackBar: FlutterSliderTrackBar(
-            inactiveTrackBarHeight: 30,
-            activeTrackBarHeight: 30,
+            inactiveTrackBarHeight: 40,
+            activeTrackBarHeight: 40,
             inactiveTrackBar: BoxDecoration(
               color: theme.hintColor.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
             activeTrackBar: BoxDecoration(
               color: theme.primaryColor,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           handler: FlutterSliderHandler(

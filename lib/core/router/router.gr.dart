@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 import 'package:investify/presentation/details/view/details.dart' as _i1;
 import 'package:investify/presentation/home/view/home.dart' as _i2;
 import 'package:investify/presentation/journal/view/journal.dart' as _i3;
@@ -16,10 +17,19 @@ import 'package:investify/presentation/setup/view/setup.dart' as _i4;
 
 /// generated route for
 /// [_i1.DetailsPage]
-class DetailsRoute extends _i5.PageRouteInfo<void> {
-  const DetailsRoute({List<_i5.PageRouteInfo>? children})
-      : super(
+class DetailsRoute extends _i5.PageRouteInfo<DetailsRouteArgs> {
+  DetailsRoute({
+    _i6.Key? key,
+    required int days,
+    required double amount,
+    List<_i5.PageRouteInfo>? children,
+  }) : super(
           DetailsRoute.name,
+          args: DetailsRouteArgs(
+            key: key,
+            days: days,
+            amount: amount,
+          ),
           initialChildren: children,
         );
 
@@ -28,9 +38,33 @@ class DetailsRoute extends _i5.PageRouteInfo<void> {
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      return const _i1.DetailsPage();
+      final args = data.argsAs<DetailsRouteArgs>();
+      return _i1.DetailsPage(
+        key: args.key,
+        days: args.days,
+        amount: args.amount,
+      );
     },
   );
+}
+
+class DetailsRouteArgs {
+  const DetailsRouteArgs({
+    this.key,
+    required this.days,
+    required this.amount,
+  });
+
+  final _i6.Key? key;
+
+  final int days;
+
+  final double amount;
+
+  @override
+  String toString() {
+    return 'DetailsRouteArgs{key: $key, days: $days, amount: $amount}';
+  }
 }
 
 /// generated route for

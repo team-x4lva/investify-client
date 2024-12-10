@@ -20,25 +20,27 @@ class HomeScreen extends StatelessWidget {
             onDestinationSelected: (index) {
               tabsRouter.setActiveIndex(index);
             },
-            height: 50,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+            height: 60,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             backgroundColor: theme.colorScheme.surface,
-            indicatorColor: theme.colorScheme.secondaryContainer,
+            indicatorColor: Colors.transparent,
             indicatorShape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             destinations: [
               NavigationDestination(
-                  icon: Icon(
-                    Icons.inventory_sharp,
+                  icon: Image.asset(
+                    'assets/icons/gear.png',
+                    width: 25,
                     color: theme.colorScheme.onSurface,
                   ),
-                  label: ''),
+                  label: 'Создание'),
               NavigationDestination(
-                  icon: Icon(
-                    Icons.backpack,
+                  icon: Image.asset(
+                    'assets/icons/portfolio2.png',
+                    width: 25,
                     color: theme.colorScheme.onSurface,
                   ),
-                  label: '')
+                  label: 'Портфель')
             ],
           ),
         );

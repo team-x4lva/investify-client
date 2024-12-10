@@ -5,7 +5,10 @@ import 'package:investify/core/widgets/widgets.dart';
 
 @RoutePage()
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({super.key});
+  const DetailsPage({super.key, required this.days, required this.amount});
+
+  final int days;
+  final double amount;
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -51,6 +54,7 @@ class _DetailsPageState extends State<DetailsPage> {
               InvestifyAnimatedWidget(
                   index: 3,
                   child: InvestifyButton(
+                      showShadow: false,
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
                         'Собрать портфель',
