@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:investify/core/router/router.gr.dart';
 import 'package:investify/core/widgets/widgets.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -12,16 +13,9 @@ class SetupPage extends StatefulWidget {
 }
 
 class _SetupPageState extends State<SetupPage> {
-  bool isRangeSelected = false;
-  bool isMoneySelected = false;
-  String selectedRange = 'Среднесрочный';
-  List<Widget> rangesList = [
-    const Center(
-      child: CupertinoText('Короткосрочный (неделя - месяц)'),
-    ),
-    const Center(child: CupertinoText('Среднесрочный (месяц - год)')),
-    const Center(child: CupertinoText('Долгосрочный (несколько лет)'))
-  ];
+  final daysController = TextEditingController();
+  final moneyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -45,17 +39,19 @@ class _SetupPageState extends State<SetupPage> {
                 ),
               ),
             ),
-            const Column(
+            Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: InvestifyTextInput(
+                      controller: daysController,
                       hintText: 'Приблизительный срок в днях'),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: InvestifyTextInput(
+                      controller: moneyController,
                       hintText: 'Введите сумму инвестиций     ₽'),
                 ),
               ],
@@ -79,7 +75,12 @@ class _SetupPageState extends State<SetupPage> {
                   )
                 ],
               ),
-              onTap: () {},
+              onTap: () {
+                if (daysController.text.isNotEmpty ||
+                    moneyController.text.isNotEmpty) {
+                  context.router.push(const DetailsRoute());
+                }
+              },
             )
           ],
         ),
