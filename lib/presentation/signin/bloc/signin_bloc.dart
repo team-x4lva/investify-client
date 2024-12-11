@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:investify/data/models/user/user.dart';
+import 'package:investify/data/remote/models/user/user.dart';
 import 'package:investify/domain/auth_manager/auth_manager.dart';
-import 'package:investify/domain/repository/auth_repository.dart';
+import 'package:investify/domain/remote_repositories/auth_repository.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 part 'signin_event.dart';

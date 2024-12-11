@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:investify/data/models/portfolio/portfolio.dart';
+import 'package:investify/data/remote/models/portfolio/portfolio.dart';
 import 'package:investify/data/remote/portfolio_request.dart';
-import 'package:investify/domain/repository/portfolio_repository.dart';
+import 'package:investify/domain/remote_repositories/portfolio_repository.dart';
 
 class PortfolioRepositoryImpl implements PortfolioRepository {
   final Dio dio;

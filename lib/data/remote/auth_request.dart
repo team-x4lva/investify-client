@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:investify/data/models/user/user.dart';
-import 'package:investify/data/models/user/user_registration/user_registration.dart';
+import 'package:investify/data/remote/models/user/user.dart';
+import 'package:investify/data/remote/models/user/user_registration/user_registration.dart';
 
 class AuthRequest {
   AuthRequest({

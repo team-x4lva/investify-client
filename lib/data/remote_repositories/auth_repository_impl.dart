@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:investify/data/models/user/user.dart';
-import 'package:investify/data/models/user/user_registration/user_registration.dart';
+import 'package:investify/data/remote/models/user/user.dart';
+import 'package:investify/data/remote/models/user/user_registration/user_registration.dart';
 import 'package:investify/data/remote/auth_request.dart';
-import 'package:investify/domain/repository/auth_repository.dart';
+import 'package:investify/domain/remote_repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final Dio dio;

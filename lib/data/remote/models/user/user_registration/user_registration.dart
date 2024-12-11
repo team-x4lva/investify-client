@@ -1,4 +1,4 @@
-import 'package:investify/data/models/user/user.dart';
+import 'package:investify/data/remote/models/user/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_registration.g.dart';
