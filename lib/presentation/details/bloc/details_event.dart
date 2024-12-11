@@ -2,15 +2,15 @@ part of 'details_bloc.dart';
 
 sealed class DetailsEvent {}
 
-final class MakePortfolio extends DetailsEvent {
+final class GeneratePortfolio extends DetailsEvent {
   final int days;
-  final double amount;
-  final List<String> instruments;
-  final String strategy;
+  final double moneyAmount;
+  final List<String> desiredInstrumentsCategories;
+  final double volatility;
 
-  MakePortfolio(
+  GeneratePortfolio(
       {required this.days,
-      required this.amount,
-      required this.instruments,
-      required this.strategy});
+      required this.moneyAmount,
+      required this.desiredInstrumentsCategories,
+      required this.volatility});
 }

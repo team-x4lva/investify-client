@@ -93,7 +93,7 @@ class _SetupPageState extends State<SetupPage> {
                         .push(DetailsRoute(days: days, amount: amount));
                   }
                 },
-              )
+              ),
             ],
           ),
         ),

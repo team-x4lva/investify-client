@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:investify/data/remote/models/final_generated_portfolio/final_generated_portfolio.dart';
+import 'package:investify/data/remote/models/generate_portfolio/generate_portfolio.dart';
 import 'package:investify/data/remote/models/portfolio/portfolio.dart';
-import 'package:investify/data/remote/models/user/user_registration/user_registration.dart';
 
 class PortfolioRequest {
   PortfolioRequest({
@@ -24,7 +25,19 @@ class PortfolioRequest {
   Future<void> makePortfolio(Portfolio portfolio) async {
     try {
       final data = portfolio.toJson();
-      final response = await dio.post('$endpoint/api/portfolios', data: data);
+      await dio.post('$endpoint/api/portfolios', data: data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<FinalGeneratePortfolio> generatePortfolio(
+      GeneratePortfolio portfolio) async {
+    try {
+      final data = portfolio.toJson();
+      final response =
+          await dio.post('$endpoint/api/portfolios/generate', data: data);
+      return FinalGeneratePortfolio.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }
