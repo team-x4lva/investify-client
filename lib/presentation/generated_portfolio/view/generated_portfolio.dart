@@ -12,14 +12,22 @@ import 'package:investify/presentation/generated_portfolio/bloc/generated_portfo
 
 @RoutePage()
 class GeneratedPortfolio extends StatefulWidget {
-  const GeneratedPortfolio({super.key, required this.portfolio});
+  const GeneratedPortfolio(
+      {super.key,
+      required this.portfolio,
+      required this.days,
+      required this.amount});
   final FinalGeneratedPortfolio portfolio;
+  final int days;
+  final double amount;
 
   @override
   State<GeneratedPortfolio> createState() => _GeneratedPortfolioState();
 }
 
 class _GeneratedPortfolioState extends State<GeneratedPortfolio> {
+  bool gettingSimulation = false;
+
   @override
   Widget build(BuildContext context) {
     final saveBloc = context.read<GeneratedPortfolioBloc>();
@@ -29,16 +37,16 @@ class _GeneratedPortfolioState extends State<GeneratedPortfolio> {
     return BlocListener<GeneratedPortfolioBloc, GeneratedPortfolioState>(
       bloc: saveBloc,
       listener: (context, state) {
-        if (state is SaveDone) {
-          if (mounted) Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: Colors.green,
-            content: Text('Успешно сохранено'),
-          ));
+        if (state is SaveDone && gettingSimulation) {
+          if (Navigator.canPop(context)) Navigator.pop(context);
+          context.router.push(SimulationRoute(
+              portfolioId: state.portfolioId,
+              amount: widget.amount,
+              date: DateTime.now().add(Duration(days: widget.days))));
         } else if (state is SaveInProgress) {
           showFullscreenLoading(context);
-        } else {
-          if (mounted) Navigator.pop(context);
+        } else if (state is SaveError) {
+          if (Navigator.canPop(context)) Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: theme.colorScheme.error,
             content: const Text('Ошибка при сохранении'),
@@ -125,32 +133,41 @@ class _GeneratedPortfolioState extends State<GeneratedPortfolio> {
   void _showSaveDialog(BuildContext context, GeneratedPortfolioBloc saveBloc) {
     final TextEditingController controller = TextEditingController();
 
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        final theme = Theme.of(context);
+        return CupertinoAlertDialog(
           title: const Text('Сохранить портфель'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              hintText: 'Введите название',
-            ),
+          content: Column(
+            children: [
+              const Text('Введите название для сохранения.'),
+              const SizedBox(height: 10),
+              CupertinoTextField(
+                style: TextStyle(color: theme.colorScheme.onSurface),
+                controller: controller,
+                placeholder: 'Введите название',
+              ),
+            ],
           ),
           actions: [
-            TextButton(
+            CupertinoDialogAction(
+              isDestructiveAction: true,
               onPressed: () {
                 Navigator.pop(context);
               },
               child: const Text('Отмена'),
             ),
-            ElevatedButton(
+            CupertinoDialogAction(
               onPressed: () {
                 if (controller.text.isNotEmpty) {
-                  saveBloc.add(SavePortfolioEvent(widget.portfolio));
+                  saveBloc.add(
+                      SavePortfolioEvent(widget.portfolio, controller.text));
                   Navigator.pop(context);
                 }
               },
-              child: const Text('Сохранить'),
+              child:
+                  const Text('Сохранить', style: TextStyle(color: Colors.blue)),
             ),
           ],
         );
@@ -160,28 +177,28 @@ class _GeneratedPortfolioState extends State<GeneratedPortfolio> {
 
   void _showSimulationDialog(
       BuildContext context, GeneratedPortfolioBloc saveBloc) {
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return CupertinoAlertDialog(
           title: const Text('Получить симуляцию'),
           content: const Text(
               'Вы действительно хотите получить симуляцию? Этот портфель сохранится.'),
           actions: [
-            TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
               onPressed: () {
                 Navigator.pop(context);
               },
               child: const Text('Нет'),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+            CupertinoDialogAction(
               onPressed: () {
-                saveBloc.add(SavePortfolioEvent(widget.portfolio));
                 Navigator.pop(context);
+                _showSaveDialog(context, saveBloc);
+                gettingSimulation = true;
               },
-              child: const Text('Да'),
+              child: const Text('Да', style: TextStyle(color: Colors.blue)),
             ),
           ],
         );
@@ -238,6 +255,7 @@ class AllocationCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
+      color: theme.colorScheme.surface.withOpacity(0.2),
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -282,7 +300,8 @@ class AllocationCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  backgroundColor: theme.colorScheme.secondaryContainer,
+                  backgroundColor:
+                      theme.colorScheme.surfaceContainer.withOpacity(0.3),
                 );
               }).toList(),
             ),

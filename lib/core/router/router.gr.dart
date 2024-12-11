@@ -81,12 +81,16 @@ class GeneratedPortfolio extends _i9.PageRouteInfo<GeneratedPortfolioArgs> {
   GeneratedPortfolio({
     _i11.Key? key,
     required _i12.FinalGeneratedPortfolio portfolio,
+    required int days,
+    required double amount,
     List<_i9.PageRouteInfo>? children,
   }) : super(
           GeneratedPortfolio.name,
           args: GeneratedPortfolioArgs(
             key: key,
             portfolio: portfolio,
+            days: days,
+            amount: amount,
           ),
           initialChildren: children,
         );
@@ -100,6 +104,8 @@ class GeneratedPortfolio extends _i9.PageRouteInfo<GeneratedPortfolioArgs> {
       return _i2.GeneratedPortfolio(
         key: args.key,
         portfolio: args.portfolio,
+        days: args.days,
+        amount: args.amount,
       );
     },
   );
@@ -109,15 +115,21 @@ class GeneratedPortfolioArgs {
   const GeneratedPortfolioArgs({
     this.key,
     required this.portfolio,
+    required this.days,
+    required this.amount,
   });
 
   final _i11.Key? key;
 
   final _i12.FinalGeneratedPortfolio portfolio;
 
+  final int days;
+
+  final double amount;
+
   @override
   String toString() {
-    return 'GeneratedPortfolioArgs{key: $key, portfolio: $portfolio}';
+    return 'GeneratedPortfolioArgs{key: $key, portfolio: $portfolio, days: $days, amount: $amount}';
   }
 }
 
@@ -218,10 +230,21 @@ class SignUpRoute extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.SimulationPage]
-class SimulationRoute extends _i9.PageRouteInfo<void> {
-  const SimulationRoute({List<_i9.PageRouteInfo>? children})
-      : super(
+class SimulationRoute extends _i9.PageRouteInfo<SimulationRouteArgs> {
+  SimulationRoute({
+    _i10.Key? key,
+    required int portfolioId,
+    required double amount,
+    required DateTime date,
+    List<_i9.PageRouteInfo>? children,
+  }) : super(
           SimulationRoute.name,
+          args: SimulationRouteArgs(
+            key: key,
+            portfolioId: portfolioId,
+            amount: amount,
+            date: date,
+          ),
           initialChildren: children,
         );
 
@@ -230,7 +253,35 @@ class SimulationRoute extends _i9.PageRouteInfo<void> {
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      return const _i8.SimulationPage();
+      final args = data.argsAs<SimulationRouteArgs>();
+      return _i8.SimulationPage(
+        key: args.key,
+        portfolioId: args.portfolioId,
+        amount: args.amount,
+        date: args.date,
+      );
     },
   );
+}
+
+class SimulationRouteArgs {
+  const SimulationRouteArgs({
+    this.key,
+    required this.portfolioId,
+    required this.amount,
+    required this.date,
+  });
+
+  final _i10.Key? key;
+
+  final int portfolioId;
+
+  final double amount;
+
+  final DateTime date;
+
+  @override
+  String toString() {
+    return 'SimulationRouteArgs{key: $key, portfolioId: $portfolioId, amount: $amount, date: $date}';
+  }
 }

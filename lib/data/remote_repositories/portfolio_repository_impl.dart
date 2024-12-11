@@ -18,9 +18,10 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
   }
 
   @override
-  Future<void> addPortfolio(Portfolio portfolio) async {
+  Future<int> addPortfolio(Portfolio portfolio) async {
     final portfolioRequest = PortfolioRequest(dio: dio);
-    await portfolioRequest.makePortfolio(portfolio);
+    final int id = await portfolioRequest.makePortfolio(portfolio);
+    return id;
   }
 
   @override

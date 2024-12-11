@@ -4,6 +4,7 @@ sealed class GeneratedPortfolioEvent {}
 
 class SavePortfolioEvent extends GeneratedPortfolioEvent {
   final FinalGeneratedPortfolio portfolio;
+  final String name;
 
-  SavePortfolioEvent(this.portfolio);
+  SavePortfolioEvent(this.portfolio, this.name);
 }

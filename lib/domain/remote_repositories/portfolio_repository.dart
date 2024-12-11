@@ -6,5 +6,5 @@ abstract interface class PortfolioRepository {
   Future<List<Portfolio>> getPortfolios(int userId);
   Future<FinalGeneratedPortfolio> generatePortfolio(
       GeneratePortfolio portfolio);
-  Future<void> addPortfolio(Portfolio portfolio);
+  Future<int> addPortfolio(Portfolio portfolio);
 }

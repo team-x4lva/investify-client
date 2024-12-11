@@ -62,8 +62,9 @@ Future<void> di() async {
   final signUpBloc = SignUpBloc(AuthRepositoryImpl(dio: getIt<Dio>()));
   final signInBloc = SignInBloc(AuthRepositoryImpl(dio: getIt<Dio>()));
   final detailsBloc = DetailsBloc(PortfolioRepositoryImpl(dio: getIt<Dio>()));
-  final generatedBloc =
-      GeneratedPortfolioBloc(LocalPortfolioRepositoryImpl(storage: isar));
+  final generatedBloc = GeneratedPortfolioBloc(
+      LocalPortfolioRepositoryImpl(storage: isar),
+      PortfolioRepositoryImpl(dio: getIt<Dio>()));
   getIt.registerSingleton<SignUpBloc>(signUpBloc);
   getIt.registerSingleton<SignInBloc>(signInBloc);
   getIt.registerSingleton<DetailsBloc>(detailsBloc);
@@ -71,7 +72,7 @@ Future<void> di() async {
 
   final authManager = AuthManager();
 
-  // await authManager.logout();
+  await authManager.logout();
   await authManager.initUser();
   getIt.registerSingleton<AuthManager>(authManager);
 }

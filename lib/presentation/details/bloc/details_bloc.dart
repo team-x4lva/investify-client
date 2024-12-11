@@ -18,47 +18,6 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
       Emitter<DetailsState> emit, GeneratePortfolioEvent event) async {
     emit(PortfolioLoading());
     try {
-      // FIXME: LOGIC FOR DEVELOPMENT
-      // await Future.delayed(const Duration(seconds: 1));
-      // final testPortfolio = FinalGeneratePortfolio(
-      //     userPreferences: UserPreferences(
-      //         strategy: 'Сбалансированный',
-      //         allocationPreferences: [],
-      //         preferredInstruments: []),
-      //     generatedPortfolio: GeneratedPortfolio(
-      //         allocation: [
-      //           Allocation(
-      //               category: 'Акции',
-      //               instruments: ['GAZP', 'SBER', 'LKOH', 'YNDX', 'MGNT'],
-      //               percentage: 40),
-      //           Allocation(
-      //               category: 'Облигации',
-      //               instruments: [
-      //                 'Российские государственные облигации',
-      //                 'Российские копроративные облигации'
-      //               ],
-      //               percentage: 40),
-      //           Allocation(
-      //               category: 'Валюта',
-      //               instruments: ['USD/RUB'],
-      //               percentage: 10),
-      //           Allocation(
-      //               category: 'Золото',
-      //               instruments: ['"Gold ETFs"'],
-      //               percentage: 10),
-      //           Allocation(
-      //               category: 'Нефть',
-      //               instruments: ['Роснефть', 'Лукойл'],
-      //               percentage: 10)
-      //         ],
-      //         rationale:
-      //             'Учитывая сбалансированную стратегию, портфель распределен между акциями, облигациями, валютой, золотом и нефтью для диверсификации и умеренного риска. Приоритет отдается российским инструментам.',
-      //         strategy: 'Сбалансированный'));
-      // emit(PortfolioLoaded(portfolio: testPortfolio));
-      // return;
-      // FIXME: END OF DEV
-
-      // ignore: dead_code
       final endDate = DateTime.now().add(Duration(days: event.days));
       final generatePortfolio = GeneratePortfolio(
           moneyAmount: event.moneyAmount,

@@ -18,6 +18,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: DetailsRoute.page, path: '/details'),
         AutoRoute(page: SignUpRoute.page, path: '/signup'),
         AutoRoute(page: SignInRoute.page, path: '/signin'),
-        AutoRoute(page: GeneratedPortfolio.page, path: '/generated_portfolio')
+        AutoRoute(page: GeneratedPortfolio.page, path: '/generated_portfolio'),
+        AutoRoute(page: SimulationRoute.page, path: '/simulation_route')
       ];
 }

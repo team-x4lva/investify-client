@@ -8,7 +8,7 @@ extension PortfolioExtensions on Portfolio {
     final portfolioIsar = PortfolioIsar()
       ..name = name
       ..userId = userId
-      ..securities = securities
+      ..securities = securitiesIds
       ..share = share;
 
     return portfolioIsar;
@@ -18,10 +18,9 @@ extension PortfolioExtensions on Portfolio {
 extension PortfolioIsarExtensions on PortfolioIsar {
   Portfolio toDomainModel() {
     return Portfolio(
-      id: id,
       name: name,
       userId: userId,
-      securities: securities,
+      securitiesIds: securities,
       share: share,
     );
   }

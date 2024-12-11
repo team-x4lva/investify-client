@@ -48,7 +48,10 @@ class _DetailsPageState extends State<DetailsPage> {
                       ?.copyWith(fontWeight: FontWeight.bold)),
             ),
           );
-          context.router.push(GeneratedPortfolio(portfolio: state.portfolio));
+          context.router.push(GeneratedPortfolio(
+              portfolio: state.portfolio,
+              days: widget.days,
+              amount: widget.amount));
         } else if (state is PortfolioLoading) {
           showFullscreenLoading(context);
         } else {

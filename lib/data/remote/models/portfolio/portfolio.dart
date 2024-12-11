@@ -1,5 +1,4 @@
 import 'package:investify/data/remote/models/final_generated_portfolio/final_generated_portfolio.dart';
-import 'package:investify/data/remote/models/security/security.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'portfolio.g.dart';
@@ -7,17 +6,15 @@ part 'portfolio.g.dart';
 @JsonSerializable()
 class Portfolio {
   const Portfolio({
-    this.id,
     required this.name,
     required this.userId,
-    required this.securities,
+    required this.securitiesIds,
     required this.share,
   });
 
-  final int? id;
   final String name;
   final int userId;
-  final List<int> securities;
+  final List<int> securitiesIds;
   final List<int> share;
 
   factory Portfolio.fromFinalPortfolio(
@@ -25,7 +22,7 @@ class Portfolio {
     return Portfolio(
       name: name,
       userId: userId,
-      securities: finalPortfolio.generatedPortfolio.allocation
+      securitiesIds: finalPortfolio.generatedPortfolio.allocation
           .expand((allocation) => allocation.instruments)
           .map((instrument) => instrument.id)
           .toList(),
