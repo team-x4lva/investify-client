@@ -7,11 +7,14 @@ part of 'portfolio.dart';
 // **************************************************************************
 
 Portfolio _$PortfolioFromJson(Map<String, dynamic> json) => Portfolio(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
       userId: (json['userId'] as num).toInt(),
-      securitiesTickers: (json['securitiesTickers'] as List<dynamic>)
-          .map((e) => e as String)
+      securities: (json['securities'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
+      share: (json['share'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
           .toList(),
     );
 
@@ -19,5 +22,6 @@ Map<String, dynamic> _$PortfolioToJson(Portfolio instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'userId': instance.userId,
-      'securitiesTickers': instance.securitiesTickers,
+      'securities': instance.securities,
+      'share': instance.share,
     };

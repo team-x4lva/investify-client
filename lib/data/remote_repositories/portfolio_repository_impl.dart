@@ -24,7 +24,7 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
   }
 
   @override
-  Future<FinalGeneratePortfolio> generatePortfolio(
+  Future<FinalGeneratedPortfolio> generatePortfolio(
       GeneratePortfolio portfolio) async {
     final portfolioRequest = PortfolioRequest(dio: dio);
     final generatedPortfolio =

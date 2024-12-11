@@ -4,6 +4,7 @@ import 'package:investify/data/remote/models/portfolio/portfolio.dart';
 
 abstract interface class PortfolioRepository {
   Future<List<Portfolio>> getPortfolios(int userId);
-  Future<FinalGeneratePortfolio> generatePortfolio(GeneratePortfolio portfolio);
+  Future<FinalGeneratedPortfolio> generatePortfolio(
+      GeneratePortfolio portfolio);
   Future<void> addPortfolio(Portfolio portfolio);
 }

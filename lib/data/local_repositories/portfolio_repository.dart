@@ -1,4 +1,4 @@
-import 'package:investify/data/local/models/portfolio_mapper.dart';
+import 'package:investify/data/local/models/isar_exstentions.dart';
 import 'package:investify/data/local/portfolios_storage.dart';
 import 'package:investify/data/remote/models/portfolio/portfolio.dart';
 import 'package:investify/domain/local_repositories/portfolio_repository.dart';

@@ -22,7 +22,7 @@ class PortfolioRequest {
     }
   }
 
-  Future<void> makePortfolio(Portfolio portfolio) async {
+  Future<void> makePortfolio(portfolio) async {
     try {
       final data = portfolio.toJson();
       await dio.post('$endpoint/api/portfolios', data: data);
@@ -31,13 +31,13 @@ class PortfolioRequest {
     }
   }
 
-  Future<FinalGeneratePortfolio> generatePortfolio(
+  Future<FinalGeneratedPortfolio> generatePortfolio(
       GeneratePortfolio portfolio) async {
     try {
       final data = portfolio.toJson();
       final response =
           await dio.post('$endpoint/api/portfolios/generate', data: data);
-      return FinalGeneratePortfolio.fromJson(response.data);
+      return FinalGeneratedPortfolio.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }

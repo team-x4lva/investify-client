@@ -3,7 +3,7 @@ import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:investify/core/widgets/widgets.dart';
 
 class CustomSlider extends StatefulWidget {
-  final ValueChanged<String> onValueChanged;
+  final ValueChanged<double> onValueChanged;
 
   const CustomSlider(
       {required this.onValueChanged, super.key, required this.aboutStrategy});
@@ -53,14 +53,12 @@ class _CustomSliderState extends State<CustomSlider> {
           onDragging: (handlerIndex, lowerValue, upperValue) {
             setState(() {
               currentValue = lowerValue;
+              widget.onValueChanged(currentValue);
               if (currentValue < 33.33) {
-                widget.onValueChanged(options[0]);
                 currentOption = options[0];
               } else if (currentValue < 66.66) {
-                widget.onValueChanged(options[1]);
                 currentOption = options[1];
               } else {
-                widget.onValueChanged(options[2]);
                 currentOption = options[2];
               }
             });

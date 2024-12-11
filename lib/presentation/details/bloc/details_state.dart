@@ -7,9 +7,9 @@ final class DetailsInitial extends DetailsState {}
 final class PortfolioLoading extends DetailsState {}
 
 final class PortfolioLoaded extends DetailsState {
-  final FinalGeneratePortfolio finalGeneratePortfolio;
+  final FinalGeneratedPortfolio portfolio;
 
-  PortfolioLoaded({required this.finalGeneratePortfolio});
+  PortfolioLoaded({required this.portfolio});
 }
 
 final class PortfolioError extends DetailsState {}

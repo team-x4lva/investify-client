@@ -1,4 +1,4 @@
-import 'package:investify/data/local/models/portfolio_isar.dart';
+import 'package:investify/data/local/models/portfolio/portfolio_isar_model.dart';
 import 'package:isar/isar.dart';
 
 class PortfolioStorage {

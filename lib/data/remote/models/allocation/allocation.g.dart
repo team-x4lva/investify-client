@@ -9,7 +9,7 @@ part of 'allocation.dart';
 Allocation _$AllocationFromJson(Map<String, dynamic> json) => Allocation(
       category: json['category'] as String,
       instruments: (json['instruments'] as List<dynamic>)
-          .map((e) => e as String)
+          .map((e) => Instrument.fromJson(e as Map<String, dynamic>))
           .toList(),
       percentage: (json['percentage'] as num).toDouble(),
     );

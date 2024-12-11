@@ -6,18 +6,15 @@ part of 'final_generated_portfolio.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FinalGeneratePortfolio _$FinalGeneratePortfolioFromJson(
+FinalGeneratedPortfolio _$FinalGeneratedPortfolioFromJson(
         Map<String, dynamic> json) =>
-    FinalGeneratePortfolio(
+    FinalGeneratedPortfolio(
       generatedPortfolio: GeneratedPortfolio.fromJson(
           json['generatedPortfolio'] as Map<String, dynamic>),
-      userPreferences: UserPreferences.fromJson(
-          json['userPreferences'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$FinalGeneratePortfolioToJson(
-        FinalGeneratePortfolio instance) =>
+Map<String, dynamic> _$FinalGeneratedPortfolioToJson(
+        FinalGeneratedPortfolio instance) =>
     <String, dynamic>{
       'generatedPortfolio': instance.generatedPortfolio,
-      'userPreferences': instance.userPreferences,
     };

@@ -11,55 +11,68 @@ class InvestifyPieChart extends StatefulWidget {
 }
 
 class InvestifyPieChartState extends State<InvestifyPieChart> {
-  int touchedIndex = 0;
+  int touchedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
+    final total = widget.dataMap.values.reduce((a, b) => a + b);
+    final dataKeys = widget.dataMap.keys.toList();
+    final colors = [
+      AppColors.contentColorBlue,
+      AppColors.contentColorPurple,
+      AppColors.contentColorYellow,
+      AppColors.contentColorGreen,
+      AppColors.contentColorRed,
+    ];
+    final badgeIcons = [
+      'assets/icons/gold.png',
+      'assets/icons/ruble.png',
+      'assets/icons/bond.png',
+      'assets/icons/journal.png',
+      'assets/icons/barrel.png',
+    ];
+
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Row(
         children: [
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PieChartIndicator(
-                  text: 'Золото', color: AppColors.contentColorBlue),
-              PieChartIndicator(
-                  text: 'Валюта', color: AppColors.contentColorPurple),
-              PieChartIndicator(
-                  text: 'Облигации', color: AppColors.contentColorYellow),
-              PieChartIndicator(
-                  text: 'Акции', color: AppColors.contentColorGreen),
-            ],
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.dataMap.entries.map((entry) {
+                final index = dataKeys.indexOf(entry.key);
+                return PieChartIndicator(
+                  text: entry.key,
+                  color: colors[index % colors.length],
+                );
+              }).toList(),
+            ),
           ),
           Expanded(
+            flex: 3,
             child: AspectRatio(
-              aspectRatio: 1.3,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                    pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                        setState(() {
-                          if (!event.isInterestedForInteractions ||
-                              pieTouchResponse == null ||
-                              pieTouchResponse.touchedSection == null) {
-                            touchedIndex = -1;
-                            return;
-                          }
-                          touchedIndex = pieTouchResponse
-                              .touchedSection!.touchedSectionIndex;
-                        });
-                      },
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    sectionsSpace: 2,
-                    centerSpaceRadius: 0,
-                    sections: showingSections(widget.dataMap),
+              aspectRatio: 1,
+              child: PieChart(
+                PieChartData(
+                  pieTouchData: PieTouchData(
+                    touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      setState(() {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse?.touchedSection == null) {
+                          touchedIndex = -1;
+                          return;
+                        }
+                        touchedIndex = pieTouchResponse!
+                            .touchedSection!.touchedSectionIndex;
+                      });
+                    },
                   ),
+                  borderData: FlBorderData(show: false),
+                  sectionsSpace: 0, // Убрали spacing между секциями
+                  centerSpaceRadius: 10, // Минимальное пространство в центре
+                  sections: showingSections(
+                      widget.dataMap, colors, badgeIcons, total),
                 ),
               ),
             ),
@@ -69,94 +82,35 @@ class InvestifyPieChartState extends State<InvestifyPieChart> {
     );
   }
 
-  List<PieChartSectionData> showingSections(Map<String, double> dataMap) {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 22.0 : 16.0;
-      final radius = isTouched ? 115.0 : 100.0;
-      final widgetSize = isTouched ? 60.0 : 40.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+  List<PieChartSectionData> showingSections(Map<String, double> dataMap,
+      List<Color> colors, List<String> badgeIcons, double total) {
+    final dataKeys = dataMap.keys.toList();
 
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: AppColors.contentColorBlue,
-            value: dataMap['Золото'],
-            title: '${dataMap['Золото']}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              shadows: shadows,
-            ),
-            badgeWidget: _Badge(
-              'assets/icons/gold.png',
-              size: widgetSize,
-              borderColor: AppColors.contentColorBlack,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 1:
-          return PieChartSectionData(
-            color: AppColors.contentColorYellow,
-            value: dataMap['Облигации'],
-            title: '${dataMap['Облигации']}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              shadows: shadows,
-            ),
-            badgeWidget: _Badge(
-              'assets/icons/bond.png',
-              size: widgetSize,
-              borderColor: AppColors.contentColorBlack,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 2:
-          return PieChartSectionData(
-            color: AppColors.contentColorPurple,
-            value: dataMap['Валюта'],
-            title: '${dataMap['Валюта']}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              shadows: shadows,
-            ),
-            badgeWidget: _Badge(
-              'assets/icons/ruble.png',
-              size: widgetSize,
-              borderColor: AppColors.contentColorBlack,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 3:
-          return PieChartSectionData(
-            color: AppColors.contentColorGreen,
-            value: dataMap['Акции'],
-            title: '${dataMap['Акции']}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              shadows: shadows,
-            ),
-            badgeWidget: _Badge(
-              'assets/icons/journal.png',
-              size: widgetSize,
-              borderColor: AppColors.contentColorBlack,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        default:
-          throw Exception('Oh no');
-      }
+    return List.generate(dataMap.length, (i) {
+      final isTouched = i == touchedIndex;
+      final value = dataMap[dataKeys[i]]!;
+      final percentage = ((value / total) * 100).toStringAsFixed(1);
+      final fontSize = isTouched ? 20.0 : 12.0;
+      final radius = isTouched ? 110.0 : 100.0;
+      final widgetSize = isTouched ? 50.0 : 40.0;
+
+      return PieChartSectionData(
+        color: colors[i % colors.length],
+        value: value,
+        title: '$percentage%',
+        radius: radius,
+        titleStyle: TextStyle(
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        badgeWidget: _Badge(
+          badgeIcons[i % badgeIcons.length],
+          size: widgetSize,
+          borderColor: AppColors.contentColorBlack,
+        ),
+        badgePositionPercentageOffset: 1.0,
+      );
     });
   }
 }
@@ -211,20 +165,22 @@ class PieChartIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Container(
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-                color: color, borderRadius: BorderRadius.circular(5)),
+              color: color,
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 8),
           Text(
             text,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          )
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
         ],
       ),
     );
