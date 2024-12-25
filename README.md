@@ -42,10 +42,13 @@ The project uses the following dependencies:
 | ![Home Screen](screenshots/home.png) | ![Portfolio Screen](screenshots/config.png) |
 
 
-| Portfolio Screen | Simulation Screen (Part)| 
+| Portfolio Screens || 
 |:-------------:|:------------------:|
-| ![Home Screen](screenshots/portfolio.png) ![Home Screen](screenshots/portfolio2.png) | ![Portfolio Screen](screenshots/simulation.png) |
+| ![Home Screen](screenshots/portfolio.png) | ![Home Screen](screenshots/portfolio2.png) |
 
+| Simulation Screen |
+|:-------------:|
+| ![Home Screen](screenshots/simulation.png)|
 
 ## License
 
