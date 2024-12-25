@@ -8,7 +8,7 @@ class Instrument {
   Instrument(this.name, {required this.id, required this.percentage});
 
   final String name;
-  final int id;
+  final int? id;
   final double percentage;
   factory Instrument.fromJson(Map<String, dynamic> json) =>
       _$InstrumentFromJson(json);

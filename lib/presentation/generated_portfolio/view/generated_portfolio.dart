@@ -49,7 +49,10 @@ class _GeneratedPortfolioState extends State<GeneratedPortfolio> {
           if (Navigator.canPop(context)) Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: theme.colorScheme.error,
-            content: const Text('Ошибка при сохранении'),
+            content: Text(
+              'Ошибка при сохранении',
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
           ));
         }
       },
@@ -234,8 +237,12 @@ class AllocationInfoWidget extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          ...allocations.map((allocation) => InvestifyAnimatedWidget(
-              index: 2, child: AllocationCard(allocation: allocation))),
+          ...allocations
+              .where(
+                (element) => element.instruments.isNotEmpty,
+              )
+              .map((allocation) => InvestifyAnimatedWidget(
+                  index: 2, child: AllocationCard(allocation: allocation))),
         ],
       ),
     );
@@ -255,7 +262,7 @@ class AllocationCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
-      color: theme.colorScheme.surface.withOpacity(0.2),
+      color: theme.colorScheme.surface.withOpacity(1),
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -272,7 +279,7 @@ class AllocationCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${(allocation.percentage * 100).toStringAsFixed(1)}%',
+                  '${(allocation.percentage * 100)}%',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.primaryColor,
                     fontWeight: FontWeight.bold,
@@ -285,23 +292,29 @@ class AllocationCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: allocation.instruments.map((instrument) {
-                return Chip(
-                  label: Column(
+                return Container(
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surfaceContainer.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '${(instrument.percentage * 100).toString()}%',
-                        style: theme.textTheme.bodySmall,
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         instrument.name,
                         style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.primaryColor,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                  backgroundColor:
-                      theme.colorScheme.surfaceContainer.withOpacity(0.3),
                 );
               }).toList(),
             ),

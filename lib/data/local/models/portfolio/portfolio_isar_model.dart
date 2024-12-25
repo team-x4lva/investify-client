@@ -11,7 +11,7 @@ class PortfolioIsar {
 
   late List<int> securities;
 
-  late List<int> share;
+  late List<double> share;
 
   PortfolioIsar();
 }

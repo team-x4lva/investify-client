@@ -1,46 +1,78 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:investify/data/remote/models/graph_point/graph_point.dart';
 
 class InvestifyLineChart extends StatelessWidget {
-  final List<Map<String, dynamic>> backendData = [
-    {"x": 1, "y": 5},
-    {"x": 2, "y": 10},
-    {"x": 2.2, "y": 12},
-    {"x": 3, "y": 18},
-    {"x": 3.3, "y": 15},
-    {"x": 4, "y": 25},
-    {"x": 5, "y": 50},
-    {"x": 8, "y": 55},
-    {"x": 10, "y": 60},
-    {"x": 25, "y": 45},
-    {"x": 30, "y": 70},
-  ];
+  final List<GraphPoint> backendData;
+  final Color color;
 
-  InvestifyLineChart({super.key});
+  const InvestifyLineChart(
+      {super.key, required this.backendData, required this.color});
+
+  double _getInterval() {
+    double max = 0;
+    for (var point in backendData) {
+      if (point.y > max) {
+        max = point.y;
+      }
+    }
+    return max / (max.toString().length + 15);
+  }
+
+  String formatNumber(double number) {
+    if (number.abs() >= 1000000000) {
+      return '${(number / 1000000000).toStringAsFixed(1)}B';
+    }
+    if (number.abs() >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    }
+    if (number.abs() >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}K';
+    }
+    return number.toStringAsFixed(1);
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // Преобразуем данные от бэкенда в список FlSpot
-    List<FlSpot> spots = backendData
-        .map((point) => FlSpot(point['x'].toDouble(), point['y'].toDouble()))
-        .toList();
+    List<FlSpot> spots =
+        backendData.map((point) => FlSpot(point.x, point.y)).toList();
 
     return LineChart(
       LineChartData(
-        titlesData: const FlTitlesData(show: false),
+        titlesData: FlTitlesData(
+          show: true,
+          leftTitles: const AxisTitles(axisNameSize: 0),
+          bottomTitles: const AxisTitles(axisNameSize: 0),
+          topTitles: const AxisTitles(axisNameSize: 0),
+          rightTitles: AxisTitles(
+              sideTitles: SideTitles(
+            showTitles: false,
+            interval: _getInterval(),
+            reservedSize:
+                backendData.last.y.toString().length.toString().length * 40.0,
+            getTitlesWidget: (value, meta) {
+              String formattedValue = formatNumber(value);
+              return Container(
+                margin: const EdgeInsets.only(left: 7),
+                child: Text(
+                  formattedValue,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: theme.hintColor.withOpacity(0.5),
+                    fontSize: 13,
+                  ),
+                ),
+              );
+            },
+          )),
+        ),
         gridData: FlGridData(
           show: false,
-          drawVerticalLine: true,
-          horizontalInterval: 5,
-          verticalInterval: 1,
+          drawVerticalLine: false,
+          horizontalInterval: _getInterval(),
           getDrawingHorizontalLine: (value) {
-            return FlLine(
-              color: theme.hintColor.withOpacity(0.0),
-              strokeWidth: 1,
-            );
-          },
-          getDrawingVerticalLine: (value) {
             return FlLine(
               color: theme.hintColor.withOpacity(0.1),
               strokeWidth: 1,
@@ -58,31 +90,22 @@ class InvestifyLineChart extends StatelessWidget {
           LineChartBarData(
             spots: spots,
             isCurved: false,
-            barWidth: 4.5,
-            color: Colors.green,
-            belowBarData: BarAreaData(
-              show: true,
-              gradient: LinearGradient(
-                colors: [
-                  Colors.green.withOpacity(0.0),
-                  Colors.green.withOpacity(0.1),
-                  Colors.green.withOpacity(0.5),
-                ],
-              ),
-            ),
+            barWidth: 2.5,
+            color: color,
+            belowBarData: BarAreaData(show: false, color: color),
             dotData: FlDotData(
               show: false,
               getDotPainter: (spot, percent, barData, index) {
                 return FlDotCirclePainter(
                   radius: 4,
-                  color: Colors.green,
-                  strokeWidth: 2,
+                  color: color,
+                  strokeWidth: 1,
                   strokeColor: Colors.white,
                 );
               },
             ),
-            gradient: const LinearGradient(
-              colors: [Colors.green, Colors.lightGreenAccent],
+            gradient: LinearGradient(
+              colors: [color.withOpacity(0.7), color],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),

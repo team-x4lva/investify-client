@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investify/data/remote/models/user/user.dart';
-import 'package:investify/domain/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/jwt_manager/jwt_manager.dart';
 import 'package:investify/domain/remote_repositories/auth_repository.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -21,11 +22,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       SignInWithEmailPassword event, Talker talker) async {
     emit(SignInInProgress());
     try {
-      // FIXME: Delete delay
-      await Future.delayed(const Duration(seconds: 2));
       final authManager = GetIt.I<AuthManager>();
       final jwtToken = await authRepository
           .signIn(User(username: event.email, password: event.password));
+      int userId = JwtManager.getId(jwtToken);
+      await authManager.setId(userId);
       await authManager.loggin(jwtToken);
       emit(SignInSuccess());
       talker.log(jwtToken);

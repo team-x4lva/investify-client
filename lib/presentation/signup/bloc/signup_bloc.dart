@@ -2,7 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investify/data/remote/models/user/user.dart';
 import 'package:investify/data/remote/models/user/user_registration/user_registration.dart';
-import 'package:investify/domain/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/jwt_manager/jwt_manager.dart';
 import 'package:investify/domain/remote_repositories/auth_repository.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -22,14 +23,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       SignUpWithEmailPassword event, Talker talker) async {
     emit(SignUpInProgress());
     try {
-      // FIXME: Delete delay
-      await Future.delayed(const Duration(seconds: 2));
       final authManager = GetIt.I<AuthManager>();
-      final id = await authRepostory.signUp(UserRegistration(
+      await authRepostory.signUp(UserRegistration(
           username: event.email, email: event.email, password: event.password));
       final jwtToken = await authRepostory
           .signIn(User(username: event.email, password: event.password));
-      await authManager.setId(id);
+      int userId = JwtManager.getId(jwtToken);
+      await authManager.setId(userId);
       await authManager.loggin(jwtToken);
       emit(SignUpSuccess());
       talker.log(jwtToken);

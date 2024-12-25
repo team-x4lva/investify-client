@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investify/core/router/router.gr.dart';
 import 'package:investify/core/widgets/fullscreen_loading.dart';
-import 'package:investify/domain/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/auth_manager/auth_manager.dart';
 import 'package:investify/presentation/signin/bloc/signin_bloc.dart';
-import 'package:investify/presentation/signup/widgets/default_auth_view.dart';
+import 'package:investify/core/widgets/default_auth_view.dart';
 
 @RoutePage()
 class SignInPage extends StatefulWidget {
@@ -53,6 +53,8 @@ class _SignInPageState extends State<SignInPage> {
             'Добро пожаловать!',
             style: theme.textTheme.titleLarge,
           ),
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

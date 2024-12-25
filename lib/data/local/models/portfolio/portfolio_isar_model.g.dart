@@ -30,7 +30,7 @@ const PortfolioIsarSchema = CollectionSchema(
     r'share': PropertySchema(
       id: 2,
       name: r'share',
-      type: IsarType.longList,
+      type: IsarType.doubleList,
     ),
     r'userId': PropertySchema(
       id: 3,
@@ -72,7 +72,7 @@ void _portfolioIsarSerialize(
 ) {
   writer.writeString(offsets[0], object.name);
   writer.writeLongList(offsets[1], object.securities);
-  writer.writeLongList(offsets[2], object.share);
+  writer.writeDoubleList(offsets[2], object.share);
   writer.writeLong(offsets[3], object.userId);
 }
 
@@ -86,7 +86,7 @@ PortfolioIsar _portfolioIsarDeserialize(
   object.id = id;
   object.name = reader.readString(offsets[0]);
   object.securities = reader.readLongList(offsets[1]) ?? [];
-  object.share = reader.readLongList(offsets[2]) ?? [];
+  object.share = reader.readDoubleList(offsets[2]) ?? [];
   object.userId = reader.readLong(offsets[3]);
   return object;
 }
@@ -103,7 +103,7 @@ P _portfolioIsarDeserializeProp<P>(
     case 1:
       return (reader.readLongList(offset) ?? []) as P;
     case 2:
-      return (reader.readLongList(offset) ?? []) as P;
+      return (reader.readDoubleList(offset) ?? []) as P;
     case 3:
       return (reader.readLong(offset)) as P;
     default:
@@ -542,49 +542,58 @@ extension PortfolioIsarQueryFilter
   }
 
   QueryBuilder<PortfolioIsar, PortfolioIsar, QAfterFilterCondition>
-      shareElementEqualTo(int value) {
+      shareElementEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'share',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<PortfolioIsar, PortfolioIsar, QAfterFilterCondition>
       shareElementGreaterThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'share',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<PortfolioIsar, PortfolioIsar, QAfterFilterCondition>
       shareElementLessThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'share',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<PortfolioIsar, PortfolioIsar, QAfterFilterCondition>
       shareElementBetween(
-    int lower,
-    int upper, {
+    double lower,
+    double upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -593,6 +602,7 @@ extension PortfolioIsarQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }
@@ -864,7 +874,7 @@ extension PortfolioIsarQueryProperty
     });
   }
 
-  QueryBuilder<PortfolioIsar, List<int>, QQueryOperations> shareProperty() {
+  QueryBuilder<PortfolioIsar, List<double>, QQueryOperations> shareProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'share');
     });

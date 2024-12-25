@@ -4,6 +4,7 @@ import 'package:investify/data/remote/models/final_generated_portfolio/final_gen
 import 'package:investify/data/remote/models/generate_portfolio/generate_portfolio.dart';
 import 'package:investify/data/remote/models/portfolio/portfolio.dart';
 import 'package:investify/data/remote/models/simulation/simulation.dart';
+import 'package:investify/data/remote/models/simulation_api/simulation_api.dart';
 
 class PortfolioRequest {
   PortfolioRequest({
@@ -23,7 +24,7 @@ class PortfolioRequest {
     }
   }
 
-  Future<int> makePortfolio(portfolio) async {
+  Future<int> makePortfolio(Portfolio portfolio) async {
     try {
       final data = portfolio.toJson();
       final response = await dio.post('$endpoint/api/portfolios', data: data);
@@ -47,20 +48,12 @@ class PortfolioRequest {
     }
   }
 
-  Future<Map<String, dynamic>> getSimulation(Simulation simulation) async {
+  Future<SimulationApi> getSimulation(Simulation simulation) async {
     try {
       final data = simulation.toJson();
       final response = await dio.post('$endpoint/api/simulations', data: data);
-
-      // Получаем graph_points и bestDepositRates из вложенного json
-      final graphPoints = response.data['result']['graph_points'];
-      final bestDepositRates = response.data['bestDepositRates'];
-
-      // Возвращаем результат
-      return {
-        'graph_points': graphPoints,
-        'bestDepositRates': bestDepositRates,
-      };
+      final data2 = (response.data as Map<String, dynamic>)['result'];
+      return SimulationApi.fromJson(data2);
     } catch (e) {
       throw Exception(e);
     }

@@ -48,9 +48,11 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              'Добро пожаловать',
+              'Добро пожаловать!',
               style: theme.textTheme.titleLarge,
             ),
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

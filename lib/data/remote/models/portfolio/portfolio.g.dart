@@ -13,7 +13,7 @@ Portfolio _$PortfolioFromJson(Map<String, dynamic> json) => Portfolio(
           .map((e) => (e as num).toInt())
           .toList(),
       share: (json['share'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
+          .map((e) => (e as num).toDouble())
           .toList(),
     );
 

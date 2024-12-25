@@ -15,7 +15,7 @@ class Portfolio {
   final String name;
   final int userId;
   final List<int> securitiesIds;
-  final List<int> share;
+  final List<double> share;
 
   factory Portfolio.fromFinalPortfolio(
       FinalGeneratedPortfolio finalPortfolio, String name, int userId) {
@@ -24,11 +24,12 @@ class Portfolio {
       userId: userId,
       securitiesIds: finalPortfolio.generatedPortfolio.allocation
           .expand((allocation) => allocation.instruments)
-          .map((instrument) => instrument.id)
+          .where((instrument) => instrument.id != null)
+          .map((instrument) => instrument.id!)
           .toList(),
       share: finalPortfolio.generatedPortfolio.allocation
           .map(
-            (allocation) => allocation.percentage.toInt(),
+            (allocation) => allocation.percentage,
           )
           .toList(),
     );

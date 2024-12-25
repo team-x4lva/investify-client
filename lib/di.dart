@@ -11,7 +11,7 @@ import 'package:investify/data/local_repositories/portfolio_repository.dart';
 import 'package:investify/data/remote/dio_interseptor.dart';
 import 'package:investify/data/remote_repositories/auth_repository_impl.dart';
 import 'package:investify/data/remote_repositories/portfolio_repository_impl.dart';
-import 'package:investify/domain/auth_manager/auth_manager.dart';
+import 'package:investify/domain/managers/auth_manager/auth_manager.dart';
 import 'package:investify/presentation/details/bloc/details_bloc.dart';
 import 'package:investify/presentation/generated_portfolio/bloc/generated_portfolio_bloc.dart';
 import 'package:investify/presentation/signin/bloc/signin_bloc.dart';
@@ -25,6 +25,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 Future<void> di() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   final getIt = GetIt.instance;
   // Логгирование
   final talker = TalkerFlutter.init();
@@ -72,7 +73,7 @@ Future<void> di() async {
 
   final authManager = AuthManager();
 
-  await authManager.logout();
+  // await authManager.logout();
   await authManager.initUser();
   getIt.registerSingleton<AuthManager>(authManager);
 }

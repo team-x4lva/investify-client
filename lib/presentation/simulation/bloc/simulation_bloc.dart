@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investify/data/remote/models/simulation/simulation.dart';
+import 'package:investify/data/remote/models/simulation_api/simulation_api.dart';
 import 'package:investify/data/remote/portfolio_request.dart';
 
 part 'simulation_event.dart';

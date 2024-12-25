@@ -9,10 +9,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl({required this.dio});
   @override
-  Future<int> signUp(UserRegistration user) async {
+  Future<void> signUp(UserRegistration user) async {
     final authRequest = AuthRequest(dio: dio);
-    final id = await authRequest.signUpWithEmailAndPassword(user);
-    return id;
+    await authRequest.signUpWithEmailAndPassword(user);
   }
 
   @override

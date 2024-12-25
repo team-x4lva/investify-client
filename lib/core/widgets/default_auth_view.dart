@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:investify/core/widgets/investify_button.dart';
 import 'package:investify/core/widgets/investify_text_input.dart';
+import 'package:lottie/lottie.dart';
 
 // Отдельный виджет для экрана регистрации и входа
 class DefaultAuthView extends StatefulWidget {
@@ -34,69 +35,73 @@ class _DefaultAuthViewState extends State<DefaultAuthView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(height: 30),
-            InvestifyTextInput(
-              hintText: 'Почта',
-              controller: widget.emailController,
-              validator: EmailValidator.validate,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            InvestifyTextInput(
-              hintText: 'Пароль',
-              obscureText: true,
-              controller: widget.passwordController,
-              validator: PasswordValidator.validate,
-            ),
-            if (widget.secondPasswordController != null)
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Lottie.asset('assets/animations/login.json', height: 250),
+              InvestifyTextInput(
+                hintText: 'Почта',
+                controller: widget.emailController,
+                validator: EmailValidator.validate,
+              ),
               const SizedBox(
                 height: 20,
               ),
-            if (widget.secondPasswordController != null)
               InvestifyTextInput(
-                hintText: 'Повторите пароль',
+                hintText: 'Пароль',
                 obscureText: true,
-                controller: widget.secondPasswordController!,
-                validator: (value) => PasswordValidator.validateConfirmPassword(
-                  value,
-                  widget.passwordController.text,
+                controller: widget.passwordController,
+                validator: PasswordValidator.validate,
+              ),
+              if (widget.secondPasswordController != null)
+                const SizedBox(
+                  height: 20,
+                ),
+              if (widget.secondPasswordController != null)
+                InvestifyTextInput(
+                  hintText: 'Повторите пароль',
+                  obscureText: true,
+                  controller: widget.secondPasswordController!,
+                  validator: (value) =>
+                      PasswordValidator.validateConfirmPassword(
+                    value,
+                    widget.passwordController.text,
+                  ),
+                ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: widget.onTextTap,
+                child: Text(
+                  widget.smallInfoText,
+                  style: widget.theme.textTheme.bodyMedium,
                 ),
               ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: widget.onTextTap,
-              child: Text(
-                widget.smallInfoText,
-                style: widget.theme.textTheme.bodyMedium,
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            InvestifyButton(
-              onTap: () {
-                if (_formKey.currentState!.validate()) {
-                  // Form is valid, proceed with onButtonTap
-                  widget.onButtonTap();
-                }
-              },
-              child: Text(
-                widget.buttonText,
-                style: widget.theme.textTheme.bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
+              InvestifyButton(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Form is valid, proceed with onButtonTap
+                    widget.onButtonTap();
+                  }
+                },
+                child: Text(
+                  widget.buttonText,
+                  style: widget.theme.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

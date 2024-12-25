@@ -73,7 +73,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
         InvestifyAnimatedWidget(
-          key: UniqueKey(),
+          key: ValueKey(widget.aboutStrategy[currentOption]),
           duration: const Duration(milliseconds: 200),
           index: 2,
           child: Container(

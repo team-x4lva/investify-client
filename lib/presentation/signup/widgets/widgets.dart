@@ -1,1 +1,1 @@
-export 'default_auth_view.dart';
+export '../../../core/widgets/default_auth_view.dart';

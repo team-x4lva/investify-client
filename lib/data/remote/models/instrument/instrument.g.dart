@@ -8,7 +8,7 @@ part of 'instrument.dart';
 
 Instrument _$InstrumentFromJson(Map<String, dynamic> json) => Instrument(
       json['name'] as String,
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       percentage: (json['percentage'] as num).toDouble(),
     );
 

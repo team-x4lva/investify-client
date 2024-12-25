@@ -7,7 +7,7 @@ final class SimulationInitial extends SimulationState {}
 final class SimulationLoading extends SimulationState {}
 
 final class SimulationLoaded extends SimulationState {
-  final Map<String, dynamic> data;
+  final SimulationApi data;
 
   SimulationLoaded({required this.data});
 }
